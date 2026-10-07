@@ -137,13 +137,14 @@ class Process implements Runnable {
         return burstTime;
     }
 
-    public int getPriority() { 
-        return priority; // الميزه الاولى
-     }
 
     public int getRemainingTime() {
         return remainingTime;
     }
+
+      public int getPriority() { 
+        return priority; // الميزه الاولى
+     }
 
     // Check if the process has finished (i.e., no remaining time)
     public boolean isFinished() {
@@ -152,6 +153,7 @@ class Process implements Runnable {
 }
 
 public class SchedulerSimulation {
+    private static int contextSwitches = 0; // اضافة الميزة الثانيه
     public static void main(String[] args) {
         // ⚠️ IMPORTANT: Put your student ID here to seed the random number generator
         // This makes your output unique to you - DO NOT forget to change this!
@@ -245,7 +247,9 @@ public class SchedulerSimulation {
             }
             System.out.println(Colors.BRIGHT_WHITE + "]" + Colors.RESET);
             System.out.println(Colors.BOLD + Colors.MAGENTA + "└" + "─".repeat(79) + Colors.RESET + "\n");
-            
+
+            contextSwitches++;
+             // Increment context switches
             // Start the thread, which will run the process for one time quantum
             currentThread.start();
             
@@ -266,6 +270,7 @@ public class SchedulerSimulation {
                     // Re-enqueue the process to give it another chance to run in the next round
                     addProcessToQueue(process, processQueue, processMap);
                 } else {
+                
                     // If this is the last process in the queue, run it to completion
                     System.out.println(Colors.BRIGHT_YELLOW + "  ⚠ " + Colors.CYAN + process.getName() + 
                                       Colors.RESET + Colors.YELLOW + " is the last process → running to completion" + 
@@ -286,6 +291,7 @@ public class SchedulerSimulation {
         System.out.println(Colors.BOLD + Colors.BRIGHT_GREEN + 
                           "╚════════════════════════════════════════════════════════════════════════════════╝" + 
                           Colors.RESET + "\n");
+        System.out.println("total context switches: " + contextSwitches); // اضافة الميزة الثانيه
     }
     
     // Method to add a process to the queue and map, while printing a "ready" message
@@ -301,9 +307,10 @@ public class SchedulerSimulation {
         processMap.put(thread, process);
         
         // Print a message indicating the process has entered the ready queue
-        System.out.println(Colors.BLUE + "  ➕ " + Colors.BOLD + Colors.CYAN + process.getName() + 
-                          Colors.RESET + Colors.BLUE + " added to ready queue" + Colors.RESET + 
+        System.out.println(Colors.BLUE + "  ➕ " + Colors.BOLD + Colors.BRIGHT_CYAN + process.getName() + Colors.RESET +
+                          Colors.MAGENTA + " (Priority: " + Colors.BRIGHT_YELLOW + process.getPriority() + Colors.MAGENTA + ")" + Colors.RESET +
+                          Colors.BLUE + " added to ready queue" + Colors.RESET + 
                           " │ Burst time: " + Colors.YELLOW + process.getBurstTime() + "ms" + 
-                          Colors.RESET);
+                          Colors.RESET); // الميزه الاولى
     }
 }
