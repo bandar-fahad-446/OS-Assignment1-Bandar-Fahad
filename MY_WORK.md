@@ -29,11 +29,11 @@
 
 | Field | Your Answer |
 |-------|-------------|
-| **Full Name** | [Write your full name here] |
-| **Student ID** | [Write your student ID here] |
-| **University Email** | [yourid]@std.psau.edu.sa |
-| **GitHub Username** | [your-github-username] |
-| **Repository Link** | [Paste your repository link here] |
+| **Full Name** | Bandar Fahad |
+| **Student ID** | 446540011 |
+| **University Email** | 446540011@std.psau.edu.sa |
+| **GitHub Username** | bandar-fahad-446 |
+| **Repository Link** | https://github.com/bandar-fahad-446/OS-Assignment1-Bandar-Fahad |
  
 ---
 
