@@ -109,15 +109,15 @@
 
 ## Example Entry (do not copy it, write your own)
 
-### Entry 1 - [September 22, 2026, 2:30 PM]
+### Entry 1 - [ 5 October 2026, 2:57 PM]
 **What I did**: Forked the repository and set up my student ID
 
 **Details**:
 - Created GitHub account with university email
 - Forked the starter repository and renamed it
-- Changed student ID on line 150 to my actual ID (441234567)
+- Changed student ID on line 150 to my actual ID (446540011)
 - Compiled and ran the program successfully
-- Committed and pushed: `Set my student ID: 441234567`
+- Committed and pushed: `Set my student ID: 446540011`
 
 **Challenges**: Had to install JDK first because `javac` wasn't recognized
 
@@ -129,55 +129,68 @@
 
 ## Your Development Log
 
-### Entry 1 - [Date and Time]
-**What I did**:
+### Entry 1 - [5 October 2026, 3:52 PM]
+**What I did**:  I forked the repo and put my student ID
 
 **Details**:
+- Forked the starter repo and renamed it to OS-Assignment1-Bandar-Fahad
+- Opened it in VS Code and changed studentID to 446540011
+- Committed and pushed to GitHub
 
-**Challenges**:
+**Challenges**: I did not know the order of the Git commands
 
-**Solution**:
+**Solution**: I learned add, then commit, then push, and checked GitHub to see my commit
 
-**Time spent**:
+**Time spent**: 1 hour
 
 ---
 
-### Entry 2 - [Date and Time]
-**What I did**:
+### Entry 2 - [5 October 2026, 10:48 PM]
+**What I did**: I added Feature 1, the process priority.
 
 **Details**:
+- Added a priority field and getter to the Process class
+- Gave each process a random priority from 1 to 10
+- Printed the priority when a process enters the ready queue
 
-**Challenges**:
+**Challenges**:  I got the error "cannot find symbol: process", and the terminal showed strange characters
 
-**Solution**:
+**Solution**: I had put my code in the wrong place in main() I moved it to addProcessToQueue() For the characters, I ran Java with UTF-8
 
-**Time spent**:
+**Time spent**: 2 hours
 
 ---
 
-### Entry 3 - [Date and Time]
-**What I did**:
+### Entry 3 - [7 October 2026, 11:33 PM]
+**What I did**: I added Feature 2, the context switch counter, and my info in MY_WORK.md
 
-**Details**:
+**Details**: 
+- Added a static contextSwitches counter
+- Increased it right before currentThread.start()
+- Printed the total at the end
+- Filled in my student information table
 
-**Challenges**:
+**Challenges**: I was not sure where to put the counter
 
-**Solution**:
+**Solution**: I put it before the thread starts, and the total matched the output
 
-**Time spent**:
+**Time spent**: 2 hours
 
 ---
 
-### Entry 4 - [Date and Time]
-**What I did**:
+### Entry 4 - [9 October 2026, 3:37 PM]
+**What I did**:I added Feature 3, waiting time tracking
 
 **Details**:
+- Saved the time when each process enters the ready queue
+- Added the waiting time each time it starts running
+- Printed a table with burst, waiting, and turnaround time
 
-**Challenges**:
+**Challenges**: Numbers showed in Arabic digits, and VS Code kept removing my imports
 
-**Solution**:
+**Solution**: I used Locale.US in printf, and added the imports after writing the code that uses them
 
-**Time spent**:
+**Time spent**: 3 hours
 
 ---
 
@@ -211,13 +224,13 @@
 
 > 💡 **TIP:** Fill this in **last**, after all entries are written.
 
-**Total time spent on assignment**: [X hours]
+**Total time spent on assignment**: [7 hours]
 
-**Most challenging part**:
+**Most challenging part**: Feature 3, because I had to track the waiting time for each process and fix an issue where numbers were initially displaying in Arabic numerals
 
-**Most interesting learning**:
+**Most interesting learning**: Understanding how the CPU scheduler assigns turns to threads and how context switches occur when switching between threads
 
-**What I would do differently next time**:
+**What I would do differently next time**: Start the assignment earlier and document each log entry immediately after every work session
 
 ---
 
