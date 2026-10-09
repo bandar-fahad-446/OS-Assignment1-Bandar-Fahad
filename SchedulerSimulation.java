@@ -1,9 +1,10 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Random;
-
 // ANSI Color Codes for enhanced terminal output
 class Colors {
     public static final String RESET = "\u001B[0m";
@@ -30,6 +31,10 @@ class Process implements Runnable {
     private int timeQuantum; // Time slice (time quantum) allowed per CPU access (in milliseconds)
     private int remainingTime; // Time left for the process to finish its execution
     private int priority; //هنا نسجل اولويه العمليه 
+    
+    private long creationTime;
+    private long readyStartTime;
+    private long totalWaitingTime = 0; // اضافة الميزه الثالثه
 
     // Constructor to initialize the process with name, burst time, and time quantum
     public Process(String name, int burstTime, int timeQuantum,int priority ) { // 
@@ -37,8 +42,10 @@ class Process implements Runnable {
         this.burstTime = burstTime;
         this.timeQuantum = timeQuantum;
         this.remainingTime = burstTime;
-        this.priority = priority; // اضافة 
+        this.priority = priority; //  اضافه الميزه الاولى 
 
+        this.creationTime = System.currentTimeMillis(); 
+        this.readyStartTime = this.creationTime; // اضاقة الميزه الثالثه
         // Initially, remaining time is equal to the burst time
     }
 
@@ -129,7 +136,7 @@ class Process implements Runnable {
     }
     
     // Getter methods for process name, burst time, and remaining time
-    public String getName() {
+public String getName() {
         return name;
     }
 
@@ -137,22 +144,36 @@ class Process implements Runnable {
         return burstTime;
     }
 
-
     public int getRemainingTime() {
         return remainingTime;
     }
 
-      public int getPriority() { 
-        return priority; // الميزه الاولى
-     }
+    public int getPriority() { 
+        return priority; // الميزة الأولى
+    }
 
-    // Check if the process has finished (i.e., no remaining time)
+    public void enteredReadyQueue() {
+        readyStartTime = System.currentTimeMillis();
+    }
+
+    public void startedRunning() {
+        totalWaitingTime += System.currentTimeMillis() - readyStartTime; // الميزة الثالثة
+    }
+
+    public long getWaitingTime() {
+        return totalWaitingTime; // الميزة الثالثة
+    }
+
+    public long getTurnaroundTime() {
+        return totalWaitingTime + burstTime; // الميزة الثالثة
+    }
+
     public boolean isFinished() {
         return remainingTime <= 0;
     }
 }
 
-public class SchedulerSimulation {
+     public class SchedulerSimulation {
     private static int contextSwitches = 0; // اضافة الميزة الثانيه
     public static void main(String[] args) {
         // ⚠️ IMPORTANT: Put your student ID here to seed the random number generator
@@ -172,7 +193,9 @@ public class SchedulerSimulation {
         Queue<Thread> processQueue = new LinkedList<>();
         
         // Map to associate each thread with its respective process object
+
         Map<Thread, Process> processMap = new HashMap<>();
+         List<Process> allProcesses = new ArrayList<>(); // الميزه الثالثه
         
         // Print simulation header with elegant formatting
         System.out.println("\n" + Colors.BOLD + Colors.BRIGHT_CYAN + 
@@ -211,7 +234,8 @@ public class SchedulerSimulation {
             // Create a new process object with a unique name, burst time, and the defined time quantum
             Process process = new Process("P" + i, burstTime, timeQuantum,priority); // الميزه الاولى
             
-            // Add the process to the ready queue and the map
+            allProcesses.add(process); // الميزه الثالثه
+
             addProcessToQueue(process, processQueue, processMap);
         }
         
@@ -247,8 +271,11 @@ public class SchedulerSimulation {
             }
             System.out.println(Colors.BRIGHT_WHITE + "]" + Colors.RESET);
             System.out.println(Colors.BOLD + Colors.MAGENTA + "└" + "─".repeat(79) + Colors.RESET + "\n");
+           
+            Process runningProcess = processMap.get(currentThread); // اضافة الميزه الثالثه
+            runningProcess.startedRunning();
 
-            contextSwitches++;
+            contextSwitches++; // 
              // Increment context switches
             // Start the thread, which will run the process for one time quantum
             currentThread.start();
@@ -292,9 +319,23 @@ public class SchedulerSimulation {
                           "╚════════════════════════════════════════════════════════════════════════════════╝" + 
                           Colors.RESET + "\n");
         System.out.println("total context switches: " + contextSwitches); // اضافة الميزة الثانيه
+       
+        printSummaryTable(allProcesses); // الميزه الثالثه
     }
     
-    // Method to add a process to the queue and map, while printing a "ready" message
+   public static void printSummaryTable(List<Process> processes) {
+        System.out.println("FINAL SUMMARY TABLE");
+        System.out.println("-".repeat(62));
+        System.out.printf("%-10s %-14s %-16s %-18s%n",
+                "Process", "Burst (ms)", "Waiting (ms)", "Turnaround (ms)");
+        System.out.println("-".repeat(62));
+        for (Process p : processes) {
+            System.out.printf("%-10s %-14d %-16d %-18d%n",
+                    p.getName(), p.getBurstTime(), p.getWaitingTime(), p.getTurnaroundTime());
+        }
+        System.out.println("-".repeat(62));
+    }
+     // اضافه الميزه الثالثه
     public static void addProcessToQueue(Process process, Queue<Thread> processQueue, 
                                         Map<Thread, Process> processMap) {
         // Create a new thread to run the process
@@ -314,3 +355,4 @@ public class SchedulerSimulation {
                           Colors.RESET); // الميزه الاولى
     }
 }
+
