@@ -305,7 +305,7 @@ I can see multithreading in many apps I use every day, A web browser can load a 
 
 **Your Answer:** *(3-5 sentences)*
 
-[Write your answer here.]
+A process is a program in execution with its own separate memory, while a thread is a lightweight unit of execution that shares memory with other threads in the same process. Creating a thread needs fewer resources than creating a process, and threads can share data easily. The `Process` class in `SchedulerSimulation.java` is only a simulated process, and it is run by a real Java thread created with `new Thread(process)` inside `addProcessToQueue()`. We used threads because they share the same memory, for example `processMap` and `contextSwitches`, so the scheduler can use them without copying data.
 
 ## Question 2: Ready Queue Behavior
 
@@ -317,15 +317,32 @@ I can see multithreading in many apps I use every day, A web browser can load a 
 
 **Your Answer:** *(3-5 sentences)*
 
-[Write your answer here.]
+When a process cannot finish its remaining burst time in one time quantum, the scheduler stops it and puts it at the end of the ready queue. In my run, P5 had a burst time of 4381ms, which is more than the 2000ms quantum, so it was re-queued 2 times and finished on its third turn. This is fair because no long process can keep the CPU for itself, and short processes like P2 and P10 finished early without waiting for P5. In my summary table, P5 waited 73547ms because each time it went back to the end of the queue.
 
 Example from my output:
 ```
-[Paste a relevant snippet from your program output here showing a process being re-queued]
+▶ P5 executing quantum [2000ms]
+⏸ P5 completed quantum 2000ms │ Overall progress: [█████████░░░░░░░░░░░] 45%
+Remaining time: 2381ms
+↻ P5 yields CPU for context switch
+
+➕ P5 (Priority: 4) added to ready queue │ Burst time: 4381ms
+
+▶ P5 executing quantum [2000ms]
+⏸ P5 completed quantum 2000ms │ Overall progress: [██████████████████░░] 91%
+Remaining time: 381ms
+↻ P5 yields CPU for context switch
+
+➕ P5 (Priority: 4) added to ready queue │ Burst time: 4381ms
+
+▶ P5 executing quantum [381ms]
+⏸ P5 completed quantum 381ms │ Overall progress: [████████████████████] 100%
+Remaining time: 0ms
+✓ P5 finished execution!
 ```
 
 **Explanation of example:**
-[Explain what is happening in the output snippet you pasted.]
+In this output, P5 ran for 2000ms and had 2381ms left, so it was added to the ready queue again. Then it ran another 2000ms and had 381ms left, so it was added again. On its third turn it ran for 381ms and finished.
 
 ## Question 3: Thread Lifecycle
 
@@ -335,15 +352,17 @@ Example from my output:
 
 **Your Answer:** *(3-5 sentences overall; one short explanation per state)*
 
-1. **New**: [When is P1 in the New state?]
+1. **New**: P1 is in the New state when its thread is created with `new Thread(process)` inside `addProcessToQueue()`, before it has started.
 
-2. **Runnable**: [When does P1 become Runnable?]
 
-3. **Running**: [When is P1 Running?]
+2. **Runnable**: P1 becomes Runnable when the scheduler loop calls `currentThread.start()`, so it is ready to run.
 
-4. **Waiting**: [When and why would a thread be Waiting?]
+3. **Running**: P1 is Running while it executes its `run()` method, where it simulates its work for the time quantum.
 
-5. **Terminated**: [When is P1 Terminated?]
+4. **Waiting**: Inside `run()`, P1 is in Timed Waiting during `Thread.sleep()`. At the same time, the main thread is Waiting at `join()` until P1 finishes its turn.
+
+
+5. **Terminated**: P1 is Terminated when its `run()` method finishes and the thread ends.
 
 ## Question 4: Real-World Applications
 
@@ -353,32 +372,32 @@ Example from my output:
 
 **Your Answer:** *(3-5 sentences per example)*
 
-### Example 1 (operating-system level): [Name of scenario]
+### Example 1 (operating-system level): [CPU Time Sharing in a Desktop OS]
 
 **Description**:
-[Describe the real-world scenario.]
+In operating systems like Windows or Linux, many programs (a browser, a text editor, a music player) share a few CPU cores. The OS scheduler gives each active thread a short time slice and then switches to the next one. In my simulation, each program is like a process, the time slice is the time quantum, and the switch is a context switch.
 
 **Why Round-Robin works well here**:
-[Fairness, responsiveness, predictability?]
+Round-Robin gives every program a fair turn, so a background task cannot block the programs the user is using. The frequent switching makes all programs look like they run at the same time, so the system stays responsive.
 
-### Example 2: [Name of application/scenario]
+### Example 2: [Web Server Request Handling]
 
 **Description**:
-[Describe the real-world scenario or application.]
+A web server handles requests from many users at the same time using several threads. Each request is like a process in my simulation, and each thread works on it for a short time before another request gets a turn.
 
 **Why Round-Robin works well here**:
-[Fairness, responsiveness, predictability?]
+A similar idea to Round-Robin prevents one large request, like a big file download, from blocking short page requests. Every user gets a fair and predictable service time, so the server stays responsive under heavy load.
 
 ## Summary
 
 **Key concepts I understood through these questions:**
-1.
-2.
-3.
+1. A thread shares memory with other threads, but a process has its own memory
+2. A process that does not finish in its quantum goes back to the end of the ready queue
+3. `join()` makes the main thread wait, and `sleep()` pauses a thread for a fixed time
 
 **Concepts I need to study more:**
-1.
-2.
+1. How real operating systems schedule threads
+2. The difference between Waiting and Timed Waiting
 
 ---
 
