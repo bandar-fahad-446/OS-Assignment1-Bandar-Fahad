@@ -250,15 +250,15 @@
 
 **Your Answer:** *(5-7 sentences)*
 
-[Write your answer here.]
+In this assignment I learned how Java runs tasks using the `Runnable` interface and the `Thread` class. When I call `Thread.start()`, a new thread begins and runs the code inside the `run()` method, I used `Thread.sleep()` inside `run()` to pretend the process is using the CPU for its time quantum, I also learned that `Thread.join()` makes the main thread wait until the process thread finishes its turn, so the scheduler runs one process at a time. In my own run, the program had 25 context switches, and P5 went back to the ready queue 2 times because its burst time (4381ms) was bigger than the quantum (2000ms), This helped me see how time-slicing in an operating system works in real Java code
 
 ## Question 2: What was the most challenging part of this assignment?
 
 > 💡 **TIP:** Pick **one** specific challenge (understanding the code, one of the features, Git, the video) and say *why* it was hard.
 
 **Your Answer:** *(5-7 sentences)*
-
-[Write your answer here.]
+The most challenging part of this assignment was Feature 3, the waiting time tracking,
+I had to understand when a process enters the ready queue and when it starts running, because in Round-Robin a process can wait more than once before it finishes. I used `System.currentTimeMillis()` to save the time in `readyStartTime`, and I added the waiting time to `totalWaitingTime` each time the process starts running. It was hard because I had to put the new method calls in the right places, in `addProcessToQueue()` and in the scheduler loop. I also had a small problem when my summary table showed numbers in Arabic digits like 2079, and I fixed it with `Locale.US`. This feature helped me understand that accurate time tracking is important in CPU scheduling
 
 ## Question 3: How did you overcome the challenges you faced?
 
@@ -266,15 +266,14 @@
 
 **Your Answer:** *(5-7 sentences)*
 
-[Write your answer here.]
-
+I overcame the challenges by working on one feature at a time and running the program after every small change. When I got the error "cannot find symbol: process", I understood that I had put my code in the wrong place in `main()`, so I moved it to `addProcessToQueue()` where `process` exists, When the terminal showed strange characters, I ran Java with UTF-8 encoding. When my table showed Arabic digits, I used `Locale.US` in `printf`, VS Code kept deleting my new imports, so I added them after writing the code that uses them. I also checked my results, for example that turnaround time equals waiting time plus burst time for every process in my table. This way I found my mistakes early and understood the code better
 ## Question 4: How can you apply multithreading concepts in real-world applications?
 
 > 💡 **TIP:** Use real applications you know (web browser, game, mobile app, music player) and connect each one to what you built here.
 
 **Your Answer:** *(5-7 sentences)*
 
-[Write your answer here.]
+I can see multithreading in many apps I use every day, A web browser can load a page and still respond when I click, because the tasks run on separate threads. A music app can download the next song while it plays the current one, so the music does not stop, Mobile apps run heavy tasks in the background so the screen does not freeze. Operating systems share CPU time between all these apps in a similar way to my simulation, where each process gets a time quantum and then goes back to the ready queue. In my program, the 25 context switches show how the scheduler gives every process a fair turn, This helped me understand why apps can feel fast and responsive even when many things are running together
 
 ### Optional: What would you like to learn more about?
 
