@@ -39,7 +39,7 @@
 
 ## 🎥 Video Link
 
-**Video Link**: [Paste your video link here]
+**Video Link**: [https://drive.google.com/file/d/1P8oQ8uB5bgfsidoGMOsV1OJTC_jro60z/view?usp=sharing]
 
 > ⚠️ **WARNING:** The video must be **publicly accessible** ("Anyone with the link can view") on **Google Drive**, **YouTube (Unlisted or Public)** or any other cloud file-sharing system. A private, restricted or broken link counts as a **missing video (-1 mark)**.
 >
@@ -194,16 +194,19 @@
 
 ---
 
-### Entry 5 - [Date and Time]
-**What I did**:
+### Entry 5 - [10 October 2026]
+**What I did**: I wrote Part B and Part C in MY_WORK.md and recorded the demo video
 
-**Details**:
+**Details**: - Wrote the reflection answers and the technical answers using my own program output
+- Added the P5 output snippet for the ready queue question
+- Recorded the video from VS Code and added the link to MY_WORK.md
 
-**Challenges**:
+**Challenges**: I was confused about where to paste my answers in MY_WORK.md because the template had example text and empty placeholders
 
-**Solution**:
+**Solution**: I kept the example untouched, replaced only the placeholders, and searched for "[" to check that none were left.
 
-**Time spent**:
+
+**Time spent**: 2 hours
 
 ---
 
@@ -224,7 +227,7 @@
 
 > 💡 **TIP:** Fill this in **last**, after all entries are written.
 
-**Total time spent on assignment**: [7 hours]
+**Total time spent on assignment**: [9 hours]
 
 **Most challenging part**: Feature 3, because I had to track the waiting time for each process and fix an issue where numbers were initially displaying in Arabic numerals
 
